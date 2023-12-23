@@ -1,0 +1,24 @@
+bool areParenthesesBalanced(String input) {
+  int count = 0;
+
+  for (int i = 0; i < input.length && count >= 0; i++) {
+    if (input[i] == '(') {
+      count++;
+    } else if (input[i] == ')') {
+      count--;
+    }
+  }
+
+  return count == 0;
+}
+
+void main() {
+  String balancedExpression = "((a + b) * (c - d))";
+  String unbalancedExpression = "((a + b) * (c - d)";
+
+  print("Balanced Expression: $balancedExpression");
+  print("Are Parentheses Balanced? ${areParenthesesBalanced(balancedExpression)}");
+
+  print("\nUnbalanced Expression: $unbalancedExpression");
+  print("Are Parentheses Balanced? ${areParenthesesBalanced(unbalancedExpression)}");
+}

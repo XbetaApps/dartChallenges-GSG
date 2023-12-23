@@ -1,0 +1,100 @@
+class Node {
+ dynamic data;
+ Node? next;
+
+ Node(this.data);
+}
+
+void printListInReverse(Node? head) {
+ if (head == null) {
+    return;
+ }
+
+ printListInReverse(head.next);
+ print(head.data);
+}
+
+Node? findMiddleNode(Node? head) {
+ if (head == null) {
+    return null;
+ }
+
+ Node? slowPointer = head;
+ Node? fastPointer = head;
+
+ while (fastPointer != null && fastPointer.next != null) {
+    slowPointer = slowPointer!.next;
+    fastPointer = fastPointer.next!.next;
+ }
+
+ return slowPointer;
+}
+
+Node? reverseLinkedList(Node? head) {
+ Node? prev = null;
+ Node? current = head;
+ Node? next;
+
+ while (current != null) {
+    next = current.next;
+    current.next = prev;
+    prev = current;
+    current = next;
+ }
+
+ return prev;
+}
+
+Node? removeOccurrences(Node? head, dynamic target) {
+ while (head != null && head.data == target) {
+    head = head.next;
+ }
+
+ Node? current = head;
+
+ while (current != null && current.next != null) {
+    if (current.next!.data == target) {
+      current.next = current.next!.next;
+    } else {
+      current = current.next;
+    }
+ }
+
+ return head;
+}
+
+void main() {
+ // Challenge 1: Print in Reverse
+ Node head = Node(1);
+ head.next = Node(2);
+ head.next!.next = Node(3);
+ head.next!.next!.next = Node(4);
+
+ print("Challenge 1: Linked List in Reverse Order:");
+ printListInReverse(head);
+
+ // Challenge 2: Find the Middle Node
+ Node? middleNode = findMiddleNode(head);
+ print("\nChallenge 2: Middle Node Value: ${middleNode?.data}");
+
+ // Challenge 3: Reverse a Linked List
+ Node? reversedList = reverseLinkedList(head);
+ print("\nChallenge 3: Reversed Linked List:");
+ printListInReverse(reversedList);
+
+ // Challenge 4: Remove All Occurrences
+ Node updatedList = Node(1);
+ updatedList.next = Node(2);
+ updatedList.next!.next = Node(3);
+ updatedList.next!.next!.next = Node(2); // Duplicate value
+ updatedList.next!.next!.next!.next = Node(4);
+ dynamic targetElement = 2;
+
+ print("\nChallenge 4: Linked List with Duplicates:");
+ printListInReverse(updatedList);
+
+ Node? listWithoutOccurrences = removeOccurrences(updatedList, targetElement);
+
+ print("\nAfter Removing Occurrences of $targetElement:");
+ printListInReverse(listWithoutOccurrences);
+}
